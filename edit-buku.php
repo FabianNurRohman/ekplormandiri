@@ -20,26 +20,41 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FORM EDIT BUKU</title>
+    <title>Edit Buku</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #f8f9fa;
+            padding: 20px;
+        }
+        .container {
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+    </style>
 </head>
 <body>
-    <h1>From Edit Data Buku</h1>
-
-    <form action="" method="POST">
-        <label for="nama">Nama</label>
-        <input value="<?php echo $buku['nama']?>" type="text" id="nama" name="nama"><br><br>
-
-        <label for="isbn">ISBN</label>
-        <input value="<?php echo $buku['isbn']?>" type="text" id="isbn" name="isbn"><br><br>
-
-        <label for="unit">Unit</label>
-        <input value="<?php echo $buku['unit']?>" type="number" id="unit" name="unit"><br><br>
-
-        <button type="submit" name="submit">SUBMIT</button>
-    </form>
-    <br>
-    <a href="./buku.php">Kembali ke daftar buku</a>
+    <div class="container">
+        <h2>Edit Buku</h2>
+        <form action="" method="post">
+            <div class="form-group">
+                <label for="nama">Nama:</label>
+                <input value="<?php echo $buku['nama']?>" type="text" class="form-control" id="nama" name="nama" required>
+            </div>
+            <div class="form-group">
+                <label for="isbn">ISBN:</label>
+                <input value="<?php echo $buku['isbn']?>" type="text" class="form-control" id="isbn" name="isbn" required>
+            </div>
+            <div class="form-group">
+                <label for="unit">Unit:</label>
+                <input value="<?php echo $buku['unit']?>" type="number" class="form-control" id="unit" name="unit" required>
+            </div>
+            <button action="buku.php" type="submit" class="btn btn-primary" name="submit">Submit</button>
+            <a href="buku.php" class="btn btn-secondary">Kembali ke Daftar Staff</a>
+        </form>
+    </div>
 </body>
 </html>

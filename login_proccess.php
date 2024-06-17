@@ -1,31 +1,33 @@
 <?php
+session_start();
+include_once("./connect.php");
 
-    session_start();
+if(isset($_POST['email']) && isset($_POST['password'])){
+    $email = $_POST['email'];
+    $password = $_POST['password'];
 
-    include_once("./connect.php");
+    // Cegah SQL Injection dengan menggunakan prepared statements
+    $stmt = $db->prepare("SELECT * FROM users WHERE email = ?");
+    $stmt->bind_param("s", $email);
+    $stmt->execute();
+    $result = $stmt->get_result();
 
-    if(isset($_POST['email']) && isset($_POST['password'])){
-        $email = $_POST['email'];
-        $password = $_POST['password'];
+    if($result->num_rows > 0) {
+        $row = $result->fetch_assoc();
 
-        $sql = "SELECT * FROM users WHERE email='$email'";
-        $result = mysqli_query($db, $sql);
+        if(password_verify($password, $row['password'])) {
+            $_SESSION['email'] = $email;
 
-        if(mysqli_num_rows($result)>0) {
-            $row = mysqli_fetch_assoc($result);
-
-            if(password_verify($password, $row['password'])) {
-                $_SESSION['email'] = $email;
-
-                header("Location: index.php");
-                exit;
-            }else{
-                echo "Password salah.";
-            }
-        }else {
-            echo "Email tidak ditemukan.";
+            // Pastikan tidak ada output sebelum header redirect
+            header("Location: index.php");
+            exit;
+        } else {
+            echo "Password salah.";
         }
+    } else {
+        echo "Email tidak ditemukan.";
     }
-    
 
+    $stmt->close();
+}
 ?>
